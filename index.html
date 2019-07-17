@@ -4,7 +4,7 @@
 
 	<!-- include jquery, bootstrap and our stylesheet -->
 	<script src="http://code.jquery.com/jquery-1.11.3.min.js"></script>
-	
+
 	<link rel="stylesheet"
 		  type="text/css"
 		  href="bootstrap.css"
@@ -13,37 +13,43 @@
 	<link rel="stylesheet"
 		  type="text/css"
 		  href="styles.css"
-	      />	
+	      />
 
 	</head>
 	<body>
-		
+
 	<div class="container">
 
-		<!-- 
+		<!--
 			 we have 1 row that contains 2 columns
-		     one for the thumbnails and one for the 
+		     one for the thumbnails and one for the
 		     main reader view
 		-->
 		<div class="row">
+			<div class="col-md-12">
+				<button class="btn btn-default js-go-day">DAY NODE</button>
+				<button class="btn btn-default js-go-night">NIGHT NODE</button>
+			</div>
+		</div>
+		<div class="row">
 			<div class="col-md-3">
-				<!-- 
-					This is a list view that will 
+				<!--
+					This is a list view that will
 					contain all the chapter thumbnails
 				-->
 				<ul class="list-group scrollable" id="chapterlist">
 					<!--
-						The id contains the chapter number, something 
+						The id contains the chapter number, something
 						we will use in the JS code
 						The class list-group-item is for bootstrap
 						and chapter-thumbnail is for our code
 					-->
-            		<li id="chapter0" 
-            		   class="list-group-item chapter-thumbnail">Hamlet
+            		<li id="chapter0"
+            		   class="list-group-item chapter-thumbnail ">Hamlet
 By William Shakespeare
             		</li>
-            		<li id="chapter1" class="list-group-item chapter-thumbnail">ACT I
-SCENE I. 
+            		<li id="chapter1" class="list-group-item chapter-thumbnail  ">ACT I
+SCENE I.
 Elsinore. A platform before the castle.
 
 FRANCISCO at his post. Enter to him BERNARDO
@@ -312,11 +318,11 @@ Let's do't, I pray; and I this morning know
 Where we shall find him most conveniently.
 Exeunt
             		</li>
-            		<li id="chapter2" class="list-group-item chapter-thumbnail">SCENE II. 
+            		<li id="chapter2" class="list-group-item chapter-thumbnail">SCENE II.
 A room of state in the castle.
 
-Enter KING CLAUDIUS, QUEEN GERTRUDE, HAMLET, 
-POLONIUS, LAERTES, VOLTIMAND, 
+Enter KING CLAUDIUS, QUEEN GERTRUDE, HAMLET,
+POLONIUS, LAERTES, VOLTIMAND,
 CORNELIUS, Lords, and Attendants
 
 KING CLAUDIUS
@@ -678,7 +684,7 @@ Till then sit still, my soul: foul deeds will rise,
 Though all the earth o'erwhelm them, to men's eyes.
 Exit
             		</li>
-            		<li id="chapter3" class="list-group-item chapter-thumbnail">SCENE III. 
+            		<li id="chapter3" class="list-group-item chapter-thumbnail">SCENE III.
 A room in Polonius' house.
 
 Enter LAERTES and OPHELIA
@@ -853,7 +859,7 @@ OPHELIA
 I shall obey, my lord.
 Exeunt
             		</li>
-            		<li id="chapter4" class="list-group-item chapter-thumbnail">SCENE IV. 
+            		<li id="chapter4" class="list-group-item chapter-thumbnail">SCENE IV.
 The platform.
 
 Enter HAMLET, HORATIO, and MARCELLUS
@@ -997,7 +1003,7 @@ MARCELLUS
 Nay, let's follow him.
 Exeunt
             		</li>
-            		<li id="chapter5" class="list-group-item chapter-thumbnail">SCENE V. 
+            		<li id="chapter4" class="list-group-item chapter-thumbnail">SCENE V.
 Another part of the platform.
 
 Enter GHOST and HAMLET
@@ -1285,48 +1291,61 @@ Exeunt
           		</ul>
           	</div>
 
-          	<!-- 
-				This contains the main reader view 
-				that will show the whole chapter. 
-				It is currently empty because we will 
+          	<!--
+				This contains the main reader view
+				that will show the whole chapter.
+				It is currently empty because we will
 				fill in using JavaScript
           	-->
 			<div class="col-md-9">
 				<!--
-					well is a bootstrap class for creating 
+					well is a bootstrap class for creating
 					a nice container box
 					The id, mainViewer is for our use
 				-->
 				<div class="well" id="mainViewer" >
 				</div>
 			</div>
-			
+
 		</div>
-		
+
 	</div>
 
 	<script>
+
+		$('.js-go-night').click(function(){
+			$('body').addClass('night');
+			$('div').addClass('night');
+			$('li').addClass('night');
+		});
+		$('.js-go-day').click(function(){
+			$('body').removeClass('night');
+			$('div').removeClass('night');
+			$('li').removeClass('night');
+		});
+
+
 		// this is a variable to keep track
 		// of which chapter we are on
 		var counter = 0;
 
 		// when we click on a chapter thumbnail
 		// it displays that chapter
-		// this code is pretty similar to the 
+		// this code is pretty similar to the
 		// image gallery, but I've added some code
 		// to update the counter
 		$(".chapter-thumbnail").click(function(){
 			// copy the html from the thumbnail (this)
 			// to the main viwer
-			$("#mainViewer").html( 
+			$("#mainViewer").html(
 				$(this).html());
 
 			// get the id of this element so we can
 			// get hold of its number
 			var id = $(this).attr("id");
 
-			// set the counter to the number of the 
-			// chapter we selected. 
+			// set the counter to the number of the
+			// chapter we selected.
 			// We get this by taking the last charcter
 			// of the id and convert it to a number
 			// id.slice gets a subsection of the string
@@ -1339,18 +1358,18 @@ Exeunt
 		// virtually click the first chapter to select it
 		$("#chapter"+counter).click();
 
-		// when we click on the main viewer we want to 
-		// move forward or backward in the 
+		// when we click on the main viewer we want to
+		// move forward or backward in the
 		// chapter
 		$("#mainViewer").click(function (event){
-			
-			// move forward if we click to the right 
+
+			// move forward if we click to the right
 			// or backward if we click to the left
 
 			// event.offsetX is the horizontal
-			// position of the mouse inside the 
-			// element we have clicked on, 
-			// it will be between 0 
+			// position of the mouse inside the
+			// element we have clicked on,
+			// it will be between 0
 			// and the width of the element
 
 			// $(this).width()*0.3 is 30% of
@@ -1359,7 +1378,7 @@ Exeunt
 			// if event.offsetX is less than
 			// 30% of the width, it means it is
 			// on the left hand side
-			if(event.offsetX 
+			if(event.offsetX
 				< $(this).width()*0.3){
 				// if we've clicked on the left
 				// go back
@@ -1371,31 +1390,31 @@ Exeunt
 			}
 
 			// If we've gone below 0 it means
-			// we were at the beginning, and 
+			// we were at the beginning, and
 			// should just stay at zero
 			if(counter < 0){
 				counter =  0;
 			}
 
 			// $(".chapter-thumbnail").length
-			// is the number of elements that 
+			// is the number of elements that
 			// match the selector .chapter-thumbnail
 			// i.e. the number of chapter thumbnails
 			// if counter is equal to or more than
-			// the number of thumbnails it means 
+			// the number of thumbnails it means
 			// we've gone past the last chapter which
 			// is $(".chapter-thumbnail").length-1
 			// (because we start counting at 0)
-			if(counter >= 
+			if(counter >=
 				$(".chapter-thumbnail").length){
-				counter = 
+				counter =
 			$(".chapter-thumbnail").length-1;
 			}
-			
+
 			// we get the id of the chapter thumbnail
 			// we want by putting counter on the end
-			// of it. 
-			// we can do a virtual click on the 
+			// of it.
+			// we can do a virtual click on the
 			// chapter thumbnail to select it
 			$("#chapter"+counter).click();
 		});
@@ -1404,10 +1423,3 @@ Exeunt
 
 	</body>
 </html>
-
-
-
-
-
-
-
